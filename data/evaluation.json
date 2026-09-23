@@ -1,0 +1,13 @@
+[
+  {"id": "syn-01", "note": "Synthetic follow-up: pathology records stage I breast cancer; no nodal involvement is described.", "expected_stage": "I"},
+  {"id": "syn-02", "note": "Synthetic tumor-board note: stage 1 breast malignancy after imaging and biopsy review.", "expected_stage": "I"},
+  {"id": "syn-03", "note": "Synthetic case: the assessment lists stage II breast cancer and discusses a larger localized tumor.", "expected_stage": "II"},
+  {"id": "syn-04", "note": "Training-only note: breast carcinoma is documented as stage 2, without distant spread.", "expected_stage": "II"},
+  {"id": "syn-05", "note": "Synthetic oncology summary: stage III locally advanced breast cancer involving regional nodes.", "expected_stage": "III"},
+  {"id": "syn-06", "note": "Practice note: assessment is stage 3 breast carcinoma with extensive local involvement.", "expected_stage": "III"},
+  {"id": "syn-07", "note": "Synthetic record: stage IV metastatic breast cancer with distant spread to bone.", "expected_stage": "IV"},
+  {"id": "syn-08", "note": "Training example: stage 4 breast malignancy with documented distant metastases.", "expected_stage": "IV"},
+  {"id": "syn-09", "note": "Synthetic pathology review confirms stage II breast cancer; systemic therapy before surgery is being discussed.", "expected_stage": "II"},
+  {"id": "syn-10", "note": "Educational-only chart: stage III breast cancer, described as locally advanced rather than metastatic.", "expected_stage": "III"}
+]
+
