@@ -42,7 +42,7 @@ Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/analyze `
   -Body '{"note":"Synthetic record: stage IV metastatic breast cancer with distant spread."}'
 ```
 
-On first use, Hugging Face downloads the classifier and embedding models. If the classifier is unavailable, the demo transparently falls back to a regex **only for explicit stage mentions** and reports `explicit-stage-rule` as its method. The fallback is not represented as machine learning.
+On first use, Hugging Face downloads the classifier and embedding models. When a note states its stage explicitly ("stage IV", "stage 4"), a regex reads it directly and reports `explicit-stage-rule` as its method; this rule is not represented as machine learning. The zero-shot classifier runs only for notes without an explicit stage, because on its own it barely separates stage one from stage four (it labeled stage IV notes as stage I with near-flat probabilities).
 
 ## PostgreSQL + pgvector
 
