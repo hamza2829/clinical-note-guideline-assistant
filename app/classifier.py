@@ -59,10 +59,10 @@ def classify_with_pytorch(note: str) -> Classification:
 
 
 def classify_with_rules(note: str) -> Classification:
-    """Offline fallback for explicit stage mentions; not presented as ML."""
+    """Reads an explicit stage mention such as "stage IV" or "stage 4"; not presented as ML."""
     match = re.search(r"\bstage\s*(iv|iii|ii|i|4|3|2|1)\b", note, re.IGNORECASE)
     if not match:
-        raise ValueError("Offline fallback requires an explicit stage mention")
+        raise ValueError("Note has no explicit stage mention")
     normalized = {"1": "I", "2": "II", "3": "III", "4": "IV"}.get(
         match.group(1), match.group(1).upper()
     )
@@ -70,16 +70,18 @@ def classify_with_rules(note: str) -> Classification:
     return Classification(normalized, 1.0, probabilities, "explicit-stage-rule")
 
 
-def extract_category(note: str, allow_fallback: bool = True) -> Classification:
+def extract_category(note: str) -> Classification:
+    # An explicitly written stage is authoritative. The zero-shot model barely
+    # separates "stage one" from "stage four" (near-flat probabilities), so it
+    # is only used when the note never states the stage.
+    try:
+        return classify_with_rules(note)
+    except ValueError:
+        pass
     try:
         return classify_with_pytorch(note)
     except (OSError, RuntimeError) as exc:
-        if not allow_fallback:
-            raise
-        try:
-            return classify_with_rules(note)
-        except ValueError:
-            raise RuntimeError(
-                "The model is unavailable and this note has no explicit stage for the offline fallback"
-            ) from exc
+        raise RuntimeError(
+            "The model is unavailable and this note has no explicit stage mention"
+        ) from exc
 
